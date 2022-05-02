@@ -18,6 +18,7 @@
                 ${{ vehicle.price }}
               </h1>
               <button
+                @click="addToCart"
                 class="
                   px-3
                   py-2
@@ -53,15 +54,14 @@
           >-</span
         >
         <input
-          id="counter"
-          v-model="counter"
+          id="quantity"
+          v-model="quantity"
           aria-label="input"
           class="
             border
             dark:text-white
             border-gray-300
             dark:bg-transparent
-            h-full
             text-center
             w-14
             pb-1
@@ -98,7 +98,7 @@ export default {
   data() {
     return {
       vehicle: {},
-      counter:1,
+      quantity:1,
     }
   },
   mounted() {
@@ -106,13 +106,13 @@ export default {
   },
   methods: {
     plus() {
-      this.counter
-      this.counter=this.counter + 1;
+      this.quantity
+      this.quantity=this.quantity + 1;
     },
     minus() {
-      var preValue = document.getElementById("counter").value;
+      var preValue = document.getElementById("quantity").value;
       if (parseInt(preValue) != 0) {
-          this.counter=this.counter - 1;
+          this.quantity=this.quantity - 1;
       }
     },
     getProduct() {
@@ -128,6 +128,18 @@ export default {
         .catch(error => {
           console.log(error);
         })
+    },
+    addToCart() {
+      if (isNaN(this.quantity) || this.quantity < 1) {
+        this.quantity = 1
+      }
+
+      const item = {
+        vehicle: this.vehicle,
+        quantity: this.quantity
+      }
+
+      this.$store.commit('addToCart', item)
     }
   }
 };

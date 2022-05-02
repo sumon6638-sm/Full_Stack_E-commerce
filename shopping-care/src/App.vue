@@ -2,7 +2,7 @@
   <div id="wrapper">
     <Header />
 
-    <router-view class="h-[80vh]"/>
+    <router-view class="h-[80vh]" />
 
     <Footer />
   </div>
@@ -10,15 +10,15 @@
 
 <script>
 // @ is an alias to /src
-import Header from '@/components/Header.vue'
-import Footer from '@/components/Footer.vue'
+import Header from "@/components/Header.vue";
+import Footer from "@/components/Footer.vue";
 export default {
-  name: '',
+  name: "",
   components: {
     Header,
-    Footer
-  }
-}
+    Footer,
+  },
+};
 </script>
 
 <style lang="scss">

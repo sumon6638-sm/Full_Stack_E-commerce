@@ -231,7 +231,7 @@
           "
         >
           <span><i class="fa-solid fa-cart-arrow-down"></i></span>
-          <span>Cart</span>
+          <span>Cart ({{ cartTotalLength }})</span>
         </button>
         <a
           class="
@@ -451,10 +451,28 @@ export default {
       showVehicle: false,
       showCar: false,
       showBike: false,
+      cart: {
+        items: [],
+      },
     };
+  },
+  beforeCreate() {
+    this.$store.commit('initializeStore')
   },
   mounted() {
     window.addEventListener("scroll", this.updateScroll);
+    this.cart = this.$store.state.cart
+  },
+  computed: {
+    cartTotalLength() {
+      let totalLength = 0
+
+      for (let i = 0; i < this.cart.items.length; i++) {
+        totalLength += this.cart.items[i].quantity
+      }
+
+      return totalLength
+    }
   },
   methods: {
     updateScroll() {
