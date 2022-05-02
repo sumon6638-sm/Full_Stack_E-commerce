@@ -92,55 +92,70 @@
 
 <script>
 import axios from "axios";
+import { useToast, POSITION } from "vue-toastification";
 
 export default {
-  name: "ProductDetails",
+  name: "VehicleDetails",
   data() {
     return {
       vehicle: {},
-      quantity:1,
-    }
+      quantity: 1,
+    };
   },
   mounted() {
     this.getProduct();
   },
+  setup() {
+    const toast = useToast();
+
+    return { toast };
+  },
   methods: {
     plus() {
-      this.quantity
-      this.quantity=this.quantity + 1;
+      this.quantity;
+      this.quantity = this.quantity + 1;
     },
     minus() {
       var preValue = document.getElementById("quantity").value;
       if (parseInt(preValue) != 0) {
-          this.quantity=this.quantity - 1;
+        this.quantity = this.quantity - 1;
       }
     },
-    getProduct() {
-      const category_slug = this.$route.params.category_slug
-      const category_fashion = this.$route.params.category_fashion
-      const product_slug = this.$route.params.vehicle_slug
+    async getProduct() {
+      this.$store.commit("setIsLoading", true);
 
-      axios
+      const category_slug = this.$route.params.category_slug;
+      const category_fashion = this.$route.params.category_fashion;
+      const product_slug = this.$route.params.vehicle_slug;
+
+      await axios
         .get(`/vehicles/${category_slug}/${category_fashion}/${product_slug}/`)
-        .then(res => {
+        .then((res) => {
           this.vehicle = res.data;
+
+          document.title = this.vehicle.name + ' | EasyToBuy'
         })
-        .catch(error => {
+        .catch((error) => {
           console.log(error);
-        })
+        });
+
+      this.$store.commit("setIsLoading", false);
     },
     addToCart() {
       if (isNaN(this.quantity) || this.quantity < 1) {
-        this.quantity = 1
+        this.quantity = 1;
       }
 
       const item = {
         vehicle: this.vehicle,
-        quantity: this.quantity
-      }
+        quantity: this.quantity,
+      };
 
-      this.$store.commit('addToCart', item)
-    }
-  }
+      this.$store.commit("addToCart", item);
+      this.toast.success("Vehicle added successfully!!!", {
+        position: POSITION.TOP_CENTER,
+      });
+    },
+  },
 };
 </script>

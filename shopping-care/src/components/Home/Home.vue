@@ -56,17 +56,23 @@ export default {
   components: {},
   mounted() {
     this.getLatestProducts();
+
+    document.title = 'Home | EasyToBuy'
   },
   methods: {
-    getLatestProducts() {
-      axios
+    async getLatestProducts() {
+      this.$store.commit("setIsLoading", true);
+
+      await axios
         .get("/vehicles/latest-vehicles/")
-        .then(res => {
+        .then((res) => {
           this.latestVehicles = res.data;
         })
         .catch((error) => {
           console.log(error);
         });
+
+      this.$store.commit("setIsLoading", false);
     },
   },
 };
