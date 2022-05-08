@@ -10,23 +10,21 @@ class VehicleSerializer(serializers.ModelSerializer):
       "id",
       "name",
       "get_absolute_url",
+      "get_fashion_url",
       "description",
       "price",
       "get_image",
       "get_thumbnail"
     )
-
-class CategoryFashionSerializer(serializers.ModelSerializer):
+class VehicleFashionSerializer(serializers.ModelSerializer):
   class Meta:
-    model = Category
+    model = Vehicle
     fields = (
       "id",
-      "name",
       "get_absolute_url",
-      "slug",
-      "vehicles"
+      "get_fashion_url",
+      "description",
     )
-
 class CategorySerializer(serializers.ModelSerializer):
   class Meta:
     model = Category
@@ -34,5 +32,4 @@ class CategorySerializer(serializers.ModelSerializer):
       "id",
       "name",
       "get_absolute_url",
-      "vehicles"
     )

@@ -21,12 +21,12 @@ const routes = [
     component: () => import(/* webpackChunkName: "about" */ '../views/About.vue')
   },
   {
-    path: '/:category_slug/:category_fashion/:vehicle_slug',
+    path: '/:category_slug/:vehicle_slug/:vehicle_url',
     name: 'Vehicle',
     component: () => import('../views/Vehicle.vue')
   },
   {
-    path: '/:category_slug/:category_fashion',
+    path: '/:category_slug/:vehicle_slug',
     name: 'SubCategory',
     component: () => import('../views/SubCategory.vue')
   }

@@ -10,9 +10,6 @@ from sqlalchemy import null
 class Category(models.Model):
   name = models.CharField(max_length=255)
   slug = models.SlugField()
-  fashion = models.SlugField(blank=True, null=True)
-  
-  
   class Meta:
     ordering = ('name',)
   
@@ -20,12 +17,13 @@ class Category(models.Model):
       return self.name
   
   def get_absolute_url(self):
-      return f'/{self.slug}/{self.fashion}'
+      return f'/{self.slug}'
 
 class Vehicle(models.Model):
   category = models.ForeignKey(Category, related_name='vehicles', on_delete=models.CASCADE)
   name = models.CharField(max_length=255)
   slug = models.SlugField()
+  url = models.SlugField(unique=True)
   description = models.TextField(blank=True, null=True)
   price = models.DecimalField(max_digits=6, decimal_places=2)
   image = models.ImageField(upload_to='uploads/', blank=True, null=True)
@@ -39,7 +37,10 @@ class Vehicle(models.Model):
       return self.name
   
   def get_absolute_url(self):
-      return f'/{self.category.slug}/{self.category.fashion}/{self.slug}'
+      return f'/{self.category.slug}/{self.slug}/{self.url}'
+  
+  def get_fashion_url(self):
+      return f'/{self.category.slug}/{self.slug}'
   
   def get_image(self):
     if self.image:

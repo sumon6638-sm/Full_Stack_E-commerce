@@ -122,16 +122,20 @@ export default {
       }
     },
     async getProduct() {
+      console.log('hello')
       this.$store.commit("setIsLoading", true);
 
       const category_slug = this.$route.params.category_slug;
-      const category_fashion = this.$route.params.category_fashion;
-      const product_slug = this.$route.params.vehicle_slug;
+      const vehicle_slug = this.$route.params.vehicle_slug;
+      const vehicle_url = this.$route.params.vehicle_url;
+
+      console.log(this.$route.params, category_slug, vehicle_slug, vehicle_url, 'url')
 
       await axios
-        .get(`/vehicles/${category_slug}/${category_fashion}/${product_slug}/`)
+        .get(`/vehicles/${category_slug}/${vehicle_slug}/${vehicle_url}/`)
         .then((res) => {
           this.vehicle = res.data;
+          console.log(this.vehicle, 'hello')
 
           document.title = this.vehicle.name + ' | EasyToBuy'
         })

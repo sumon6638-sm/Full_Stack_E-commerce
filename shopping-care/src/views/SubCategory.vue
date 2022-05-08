@@ -66,10 +66,10 @@ export default {
       this.$store.commit("setIsLoading", true);
 
       const category_slug = this.$route.params.category_slug;
-      const category_fashion = this.$route.params.category_fashion;
+      const vehicle_slug = this.$route.params.vehicle_slug;
 
       await axios
-        .get(`/${category_slug}/${category_fashion}`)
+        .get(`/${category_slug}/${vehicle_slug}`)
         .then((res) => {
           this.subCategories = res.data;
 
